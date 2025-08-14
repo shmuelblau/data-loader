@@ -20,7 +20,7 @@ spec:
       containers:
         - name: server-container
           image: >-
-            shmuelblau/server:laster
+            shmuelblau/server7:laster
           ports:
             - containerPort: 8000
               protocol: TCP
@@ -34,7 +34,7 @@ spec:
            - name: PASSWORD
              value: "1234"
            - name: TABLE_NAME
-             value: "table_test"
+             value: "people"
 
       imagePullSecrets: []
   strategy:
