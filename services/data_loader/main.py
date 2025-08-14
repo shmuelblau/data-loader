@@ -40,7 +40,7 @@ def get():
     return data
 
 @app.get("/", response_class=HTMLResponse)
-def home1(request: Request):
+def home(request: Request):
     data = dal.Select()
     return templates.TemplateResponse(
         "index.html",
@@ -53,24 +53,28 @@ def home1(request: Request):
 
 @app.post('/add') 
 def add(person:PersonType):
-    
-    dal.add(person)
-    return RedirectResponse(url="/n")
+    try:
+        dal.add(person)
+    finally:
+       return RedirectResponse(url="/")
 
 
 @app.post('/edit' ) 
 def edit(person:PersonType):
-    
-    dal.edit(person)
-    return RedirectResponse(url="/n")
+    try:
+       dal.edit(person)
+    finally:
+       return RedirectResponse(url="/")
 
 
-@app.post('/delete' ) 
-def delete(id : int | str):
-    
-    person = Person(id=id)
-    dal.delete(person)
-    return RedirectResponse(url="/n")
+@app.post('/delete' ,response_class =RedirectResponse) 
+def delete(id : int  ):
+    try:
+        person = Person(id=id)
+        dal.delete(person)
+        
+    finally:
+        return RedirectResponse(url="/")
 
 if __name__ == "__main__":
     app.run(debug=True, host='0.0.0.0', port=5000)

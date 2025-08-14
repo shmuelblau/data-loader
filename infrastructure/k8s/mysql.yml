@@ -17,6 +17,10 @@ spec:
       labels:
         app: 'mysql'
     spec:
+      volumes:
+          - name: mypvc
+            persistentVolumeClaim:
+              claimName: mypvc
       containers:
         - name: mysql-container
           image: >-
@@ -33,6 +37,9 @@ spec:
              value: "shmuel"
            - name: MYSQL_PASSWORD
              value: "1234"
+          volumeMounts:
+           - name: mypvc
+             mountPath: masql
 
       imagePullSecrets: []
   strategy:
