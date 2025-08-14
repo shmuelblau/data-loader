@@ -1,3 +1,19 @@
-oc apply -f mysql.yml
 
-docker build -t shmuelblau/test:laster .
+בניה ודחיפה לדוקרהאב
+docker build -t shmuelblau/server:laster .
+docker push shmuelblau/server:laster
+
+הרצת דפלוימנט וסרוויסים
+oc apply -f mysql.yml
+oc apply -f mysql-service.yml
+oc apply -f server.yml
+oc apply -f server-service.yml
+
+הרצת SQL 
+oc rsh mysql-5cf5cbf866-d8lgx
+mysql --user shmuel --password test
+
+
+
+נתיב לתוצאות
+https://server-service-a0528075188-dev.apps.rm2.thpm.p1.openshiftapps.com/get
