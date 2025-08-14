@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Agent List</title>
+    <style>
+        table, th, td {
+            border: 1px solid black;
+            border-collapse: collapse;
+        }
+        input[type="text"], input[type="number"] {
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+    <h1>Agents</h1>
+    <table>
+        <tr>
+            <th>Code Name</th>
+            <th>Real Name</th>
+            <th>Location</th>
+            <th>Status</th>
+            <th>Missions Completed</th>
+            <th>Actions</th>
+        </tr>
+
+        {% for agent in data %}
+        <tr>
+            <form action="/edit" method="POST">
+                <td><input type="text" name="codeName" value="{{ agent[1] }}"></td>
+                <td><input type="text" name="realName" value="{{ agent[2] }}"></td>
+                <td><input type="text" name="location" value="{{ agent[3] }}"></td>
+                <td><input type="text" name="status" value="{{ agent[4] }}"></td>
+                <td><input type="number" name="missionsCompleted" value="{{ agent[5] }}"></td>
+                <td>
+                    <input type="hidden" name="id" value="{{ agent[0] }}">
+                    <input type="submit" value="Edit">
+            </form>
+            <form action="/delete" method="POST" style="display:inline;">
+                <input type="hidden" name="id" value="{{ agent[0] }}">
+                <input type="submit" value="Delete">
+            </form>
+                </td>
+        </tr>
+        {% endfor %}
+
+        <tr>
+            <form action="/add" method="POST">
+                <td><input type="text" name="codeName" placeholder="New Code Name"></td>
+                <td><input type="text" name="realName" placeholder="New Real Name"></td>
+                <td><input type="text" name="location" placeholder="Location"></td>
+                <td><input type="text" name="status" placeholder="Status"></td>
+                <td><input type="number" name="missionsCompleted" placeholder="0"></td>
+                <td><input type="submit" value="Add"></td>
+            </form>
+        </tr>
+    </table>
+</body>
+</html>
