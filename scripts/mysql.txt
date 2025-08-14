@@ -1,0 +1,3 @@
+oc apply -f mysql.yml
+
+docker build -t shmuelblau/test:laster .
