@@ -4,9 +4,11 @@
 
 
 
-from fastapi import FastAPI ,Request
+from fastapi import FastAPI, Form, HTTPException ,Request
 from fastapi.responses import JSONResponse , HTMLResponse , RedirectResponse
 from fastapi.templating import Jinja2Templates
+from starlette import status
+import uvicorn
 
 from DAL.Eagle_DAL import Eagle_DAL
 from Models.Person import Person
@@ -41,7 +43,9 @@ def get():
 
 @app.get("/", response_class=HTMLResponse)
 def home(request: Request):
+
     data = dal.Select()
+    
     return templates.TemplateResponse(
         "index.html",
         {"request": request, "data": data}
@@ -51,30 +55,36 @@ def home(request: Request):
 
 
 
-@app.post('/add') 
-def add(person:PersonType):
-    try:
-        dal.add(person)
-    finally:
-       return RedirectResponse(url="/")
-
+@app.post("/add")
+def add_form(id: int = Form(...), first_name: str = Form(...), last_name: str = Form(...),):
+   
+    person = PersonType(id=id, first_name=first_name, last_name=last_name)
+    dal.add(person)
+    return RedirectResponse(url="/", status_code=status.HTTP_303_SEE_OTHER)
+    
 
 @app.post('/edit' ) 
-def edit(person:PersonType):
-    try:
-       dal.edit(person)
-    finally:
-       return RedirectResponse(url="/")
+def edit(id: int = Form(...), first_name: str = Form(...), last_name: str = Form(...),):
+
+    person = PersonType(id=id, first_name=first_name, last_name=last_name)
+    
+    dal.edit(person)
+    
+    return RedirectResponse(url="/", status_code=status.HTTP_303_SEE_OTHER)
 
 
-@app.post('/delete' ,response_class =RedirectResponse) 
-def delete(id : int  ):
+
+@app.post("/delete")
+def delete_form(id: int = Form(...)):
     try:
         person = Person(id=id)
         dal.delete(person)
-        
-    finally:
-        return RedirectResponse(url="/")
+        return RedirectResponse(url="/", status_code=status.HTTP_303_SEE_OTHER)
+    except Exception:
+        raise HTTPException(status_code=500, detail="Failed to delete record")
 
+
+# ---------- ENTRYPOINT ----------
 if __name__ == "__main__":
-    app.run(debug=True, host='0.0.0.0', port=5000)
+    # מריצים עם uvicorn, לא app.run
+    uvicorn.run("main:app", host="0.0.0.0", port=5000, reload=True)
