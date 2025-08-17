@@ -24,3 +24,5 @@ tzdata==2025.2
 uvicorn==0.35.0
 dotenv
 jinja2 
+starlette
+python-multipart

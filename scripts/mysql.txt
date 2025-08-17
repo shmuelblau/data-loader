@@ -10,10 +10,13 @@ oc apply -f server.yml
 oc apply -f server-service.yml
 
 הרצת SQL 
-oc rsh mysql-5cf5cbf866-d8lgx
-mysql --user shmuel --password test
+oc cp create_data.sql mysql-68d8965c66-fp9hm:/tmp/init.sql
+oc cp insert_data.sql mysql-68d8965c66-fp9hm:/tmp/init.sql
+
+oc rsh mysql-68d8965c66-fp9hm sh -c "mysql -u shmuel -p'1234' test < /tmp/init.sql"
+
 
 
 
 נתיב לתוצאות
-https://server-service-a0528075188-dev.apps.rm2.thpm.p1.openshiftapps.com/get
+https://server-service-a0528075188-dev.apps.rm2.thpm.p1.openshiftapps.com
