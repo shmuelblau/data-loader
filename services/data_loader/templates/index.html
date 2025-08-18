@@ -26,16 +26,16 @@
         {% for agent in data %}
         <tr>
             <form action="/edit" method="POST">
-                <td><input type="text" name="id" value="{{ agent[0] }}"></td>
-                <td><input type="text" name="first_name" value="{{ agent[1] }}"></td>
-                <td><input type="text" name="last_name" value="{{ agent[2] }}"></td>
+                <td><input type="text" name="id" value="{{ agent["id"] }}"></td>
+                <td><input type="text" name="first_name" value="{{ agent["first_name"] }}"></td>
+                <td><input type="text" name="last_name" value="{{ agent["last_name"] }}"></td>
                 
                 <td>
-                    <input type="hidden" name="id" value="{{ agent[0] }}">
+                    <input type="hidden" name="id" value="{{ agent["id"] }}">
                     <input type="submit" value="Edit">
             </form>
             <form action="/delete" method="POST" style="display:inline;">
-                <input type="hidden" name="id" value="{{ agent[0] }}">
+                <input type="hidden" name="id" value="{{ agent["id"] }}">
                 <input type="submit" value="Delete">
             </form>
                 </td>

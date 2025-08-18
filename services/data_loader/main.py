@@ -39,6 +39,7 @@ templates = Jinja2Templates(directory="templates")
 def get():
     
     data = dal.Select()
+    print(data)
     return data
 
 @app.get("/", response_class=HTMLResponse)

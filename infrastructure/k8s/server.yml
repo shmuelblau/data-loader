@@ -20,7 +20,7 @@ spec:
       containers:
         - name: server-container
           image: >-
-            shmuelblau/mongo-server:3
+            shmuelblau/mongo-server:4
           ports:
             - containerPort: 8000
               protocol: TCP
