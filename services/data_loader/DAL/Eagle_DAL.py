@@ -4,18 +4,18 @@ from Models.Person import Person
 
 class Eagle_DAL:
     
-    def __init__(self,host,user,password, dbname ,collecsion_conn):
+    def __init__(self,host,user,password, dbname ,collecsion_name):
         db= DAL(host,user,password, dbname)
-        self.collecsion_conn = collecsion_conn
+        self.collecsion_conn = collecsion_name
         conn = db.get_conn()
-        self.collecsion = conn[collecsion_conn]
+        self.collecsion = conn[self.collecsion_conn]
 
    
 # ---------------------------------------------------------------------------------------
 
     def Select(self):
-        result = self.collecsion.find()
-        return [x for x in result]
+        
+        return list(self.collecsion.find({}, {"_id": False}))
 # ---------------------------------------------------------------------------------------
     def add(self , person):
 

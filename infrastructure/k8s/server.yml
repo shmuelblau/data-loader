@@ -20,13 +20,13 @@ spec:
       containers:
         - name: server-container
           image: >-
-            shmuelblau/mongo-server:1
+            shmuelblau/mongo-server:3
           ports:
             - containerPort: 8000
               protocol: TCP
           env: 
            - name: HOST
-             value: "mongoDB-service"
+             value: "mongodb-service"
            - name: DATABASE
              value: "test"
            - name: USER
@@ -34,7 +34,7 @@ spec:
            - name: PASSWORD
              value: "1234"
            - name: COLLECSION_NAME
-             value: "people"
+             value: "collecsion_test"
 
       imagePullSecrets: []
   strategy:
