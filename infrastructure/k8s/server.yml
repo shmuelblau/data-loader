@@ -20,20 +20,20 @@ spec:
       containers:
         - name: server-container
           image: >-
-            shmuelblau/server:laster
+            shmuelblau/mongo-server:1
           ports:
             - containerPort: 8000
               protocol: TCP
           env: 
            - name: HOST
-             value: "mysql2-service"
+             value: "mongoDB-service"
            - name: DATABASE
              value: "test"
            - name: USER
              value: "shmuel"
            - name: PASSWORD
              value: "1234"
-           - name: TABLE_NAME
+           - name: COLLECSION_NAME
              value: "people"
 
       imagePullSecrets: []

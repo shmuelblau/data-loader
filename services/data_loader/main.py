@@ -23,14 +23,14 @@ host = os.getenv("HOST")
 user = os.getenv("USER")
 password = os.getenv("PASSWORD")
 dbname = os.getenv("DATABASE")
-table_name = os.getenv("TABLE_NAME")
+collecsion_name = os.getenv("collecsion_test")
 
 
 
 
 app = FastAPI()
 
-dal = Eagle_DAL(host,user,password, dbname ,table_name)
+dal = Eagle_DAL(host,user,password, dbname ,collecsion_name)
 
 templates = Jinja2Templates(directory="templates")
 
@@ -84,7 +84,7 @@ def delete_form(id: int = Form(...)):
         raise HTTPException(status_code=500, detail="Failed to delete record")
 
 
-# ---------- ENTRYPOINT ----------
+
 if __name__ == "__main__":
-    # מריצים עם uvicorn, לא app.run
+    
     uvicorn.run("main:app", host="0.0.0.0", port=5000, reload=True)

@@ -5,41 +5,40 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   namespace: a0528075188-dev
-  name: 'mysql'
+  name: 'mongodb'
   annotations: {}
 spec:
   selector:
     matchLabels:
-      app: 'mysql'
+      app: 'mongodb'
   replicas: 1
   template:
     metadata:
       labels:
-        app: 'mysql'
+        app: 'mongodb'
     spec:
       volumes:
           - name: mypvc
             persistentVolumeClaim:
               claimName: mypvc
       containers:
-        - name: mysql-container
+        - name: mongodb-container
           image: >-
-            mysql:8.0
+            shmuelblau/mongo:6.0
           ports:
-            - containerPort: 3306
+            - containerPort: 27017
               protocol: TCP
           env: 
-           - name: MYSQL_ROOT_PASSWORD
-             value: "1111"
-           - name: MYSQL_DATABASE
-             value: "test"
-           - name: MYSQL_USER
+           - name: MONGO_INITDB_ROOT_USERNAME
              value: "shmuel"
-           - name: MYSQL_PASSWORD
+           - name: MONGO_INITDB_ROOT_PASSWORD
              value: "1234"
+           - name: MONGO_INITDB_DATABASE
+             value: "test"
+           
           volumeMounts:
            - name: mypvc
-             mountPath: masql
+             mountPath: /data/db
 
       imagePullSecrets: []
   strategy:
